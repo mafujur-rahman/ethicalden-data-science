@@ -7,25 +7,28 @@ export default function Navbar() {
   const navbarRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    gsap.fromTo(navbarRef.current,
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-    );
+useEffect(() => {
+  if (typeof window === 'undefined') return; 
 
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        navbarRef.current.classList.add('bg-[#111]', 'shadow-lg');
-        navbarRef.current.classList.remove('bg-transparent');
-      } else {
-        navbarRef.current.classList.remove('bg-[#111]', 'shadow-lg');
-        navbarRef.current.classList.add('bg-transparent');
-      }
-    };
+  gsap.fromTo(navbarRef.current,
+    { y: -100, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+  );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      navbarRef.current.classList.add('bg-[#111]', 'shadow-lg');
+      navbarRef.current.classList.remove('bg-transparent');
+    } else {
+      navbarRef.current.classList.remove('bg-[#111]', 'shadow-lg');
+      navbarRef.current.classList.add('bg-transparent');
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
 
   useEffect(() => {
     if (isOpen) {

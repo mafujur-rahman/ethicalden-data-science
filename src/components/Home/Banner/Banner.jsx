@@ -6,20 +6,33 @@ export default function Banner() {
   const heroRef = useRef(null);
   const svgRef = useRef(null);
   const [nodes, setNodes] = useState([]);
-  const mousePos = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const mousePos = useRef({ x: 0, y: 0 });
 
   const titleRef = useRef(null);
   const subtextRef = useRef(null);
   const ctaRef = useRef(null);
 
-  // Initialize nodes on mount
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      mousePos.current = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.width === 0 || windowSize.height === 0) return;
+
     const initialNodes = [];
     for (let i = 0; i < 25; i++) {
       initialNodes.push({
         id: i,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
+        x: Math.random() * windowSize.width,
+        y: Math.random() * windowSize.height,
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4,
         rBase: 2 + Math.random() * 2,
@@ -29,29 +42,25 @@ export default function Banner() {
       });
     }
     setNodes(initialNodes);
-  }, []);
+  }, [windowSize]);
 
-  // Animate nodes movement and pulse
   useEffect(() => {
     let animationFrameId;
 
     const animate = () => {
       setNodes(oldNodes => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        const width = windowSize.width;
+        const height = windowSize.height;
 
         const newNodes = oldNodes.map(node => {
           let { x, y, vx, vy, rBase, r, pulseDirection, pulseSpeed, id } = node;
 
-          // Move position
           x += vx;
           y += vy;
 
-          // Bounce off edges
           if (x < rBase || x > width - rBase) vx = -vx;
           if (y < rBase || y > height - rBase) vy = -vy;
 
-          // Pulse radius between rBase*0.8 and rBase*1.2
           let newR = r + pulseDirection * pulseSpeed;
           if (newR > rBase * 1.2) pulseDirection = -1;
           if (newR < rBase * 0.8) pulseDirection = 1;
@@ -67,16 +76,14 @@ export default function Banner() {
 
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+  }, [windowSize]);
 
-  // GSAP text animations
   useEffect(() => {
     gsap.fromTo(titleRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power4.out' });
     gsap.fromTo(subtextRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: 'power4.out' });
     gsap.fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, delay: 0.7, ease: 'power4.out' });
   }, []);
 
-  // Track mouse position for parallax
   useEffect(() => {
     const handleMouseMove = e => {
       mousePos.current = { x: e.clientX, y: e.clientY };
@@ -85,10 +92,9 @@ export default function Banner() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Calculate connecting lines with pulse on opacity + slight parallax on node positions
   const maxDistance = 160;
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
+  const centerX = windowSize.width / 2;
+  const centerY = windowSize.height / 2;
 
   const lines = [];
   for (let i = 0; i < nodes.length; i++) {
@@ -96,7 +102,6 @@ export default function Banner() {
       const nodeA = nodes[i];
       const nodeB = nodes[j];
 
-      // Apply subtle parallax offset (max 10px) based on mouse distance from center
       const offsetAx = (mousePos.current.x - centerX) * 0.02;
       const offsetAy = (mousePos.current.y - centerY) * 0.02;
       const offsetBx = (mousePos.current.x - centerX) * 0.02;
@@ -107,7 +112,6 @@ export default function Banner() {
       const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist < maxDistance) {
-        // Pulsing opacity between 0.2 and 0.7
         const pulse = 0.45 + 0.25 * Math.sin(Date.now() / 1000 + i + j);
         const opacity = pulse * (1 - dist / maxDistance);
         lines.push({
@@ -121,10 +125,6 @@ export default function Banner() {
       }
     }
   }
-
-  // Parallax offset for nodes
-  const centerXNode = window.innerWidth / 2;
-  const centerYNode = window.innerHeight / 2;
 
   return (
     <section
@@ -141,7 +141,6 @@ export default function Banner() {
           shapeRendering: 'geometricPrecision',
         }}
       >
-        {/* Connecting lines */}
         {lines.map(({ x1, y1, x2, y2, key, opacity }) => (
           <line
             key={key}
@@ -156,10 +155,9 @@ export default function Banner() {
           />
         ))}
 
-        {/* Nodes */}
         {nodes.map(({ id, x, y, r }) => {
-          const offsetX = (mousePos.current.x - centerXNode) * 0.02;
-          const offsetY = (mousePos.current.y - centerYNode) * 0.02;
+          const offsetX = (mousePos.current.x - centerX) * 0.02;
+          const offsetY = (mousePos.current.y - centerY) * 0.02;
           return (
             <circle
               key={id}
