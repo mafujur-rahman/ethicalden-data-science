@@ -122,8 +122,8 @@ export default function TechnologyStack() {
                     </div>
 
                     <div className="md:w-1/3">
-                        <div className="relative">
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#09e5e5] to-[#a8ff57] opacity-30 blur-2xl"></div>
+                        <div className="relative ">
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#09e5e5] to-[#a8ff57] opacity-30 blur-2xl "></div>
                             <div className="relative bg-[#111]/90 backdrop-blur-sm rounded-2xl p-8 border border-[#a8ff57]/30 shadow-lg">
                                 <div className="flex flex-col items-center text-center">
                                     <FaSyncAlt
