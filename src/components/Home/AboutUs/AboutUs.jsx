@@ -49,7 +49,7 @@ export default function AboutUs() {
       className="py-20 px-6 bg-[#0c0c0c] text-white relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-16 xl:items-stretch items-center min-h-[600px]">
           {/* Left Text Content */}
           <div className="lg:w-1/2">
             <h2
@@ -101,7 +101,7 @@ export default function AboutUs() {
           {/* Right Visual Box */}
           <div className="lg:w-1/2 relative flex justify-center">
             <div
-              className="relative w-72 h-72 rounded-xl border-2 border-[#09e5e5]/30 bg-[#111]"
+              className="relative w-72 h-72 lg:w-96 lg:h-96  xl:h-full xl:w-full rounded-xl border-2 border-[#09e5e5]/30 bg-[#111]"
               style={{ boxShadow: '0 0 20px 3px rgba(10,230,230,0.15)' }}
             >
               {/* Concentric Rings */}
@@ -126,31 +126,32 @@ export default function AboutUs() {
               <div
                 className="absolute top-1/2 left-1/2 rounded-full flex items-center justify-center"
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 'clamp(120px, 18vw, 220px)',
+                  height: 'clamp(120px, 18vw, 220px)',
                   backgroundColor: 'rgba(10,230,230,0.1)',
                   backdropFilter: 'blur(6px)',
                   transform: 'translate(-50%, -50%)',
-                  boxShadow: '0 0 12px 3px #09e5e5',
+                  boxShadow: '0 0 18px 4px #09e5e5',
                 }}
               >
                 <div
                   style={{
-                    width: 72,
-                    height: 72,
+                    width: 'clamp(72px, 10vw, 120px)',
+                    height: 'clamp(72px, 10vw, 120px)',
                     backgroundColor: 'rgba(168,255,87,0.1)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 0 10px 2px #a8ff57',
+                    boxShadow: '0 0 12px 3px #a8ff57',
                   }}
                 >
-                  <span className="text-[#09e5e5] text-3xl font-extrabold select-none">
+                  <span className="text-[#09e5e5] font-extrabold select-none text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                     DS
                   </span>
                 </div>
               </div>
+
 
               {/* Floating Dots */}
               <div

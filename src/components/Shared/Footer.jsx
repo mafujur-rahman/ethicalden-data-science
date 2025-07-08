@@ -8,8 +8,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="pt-16 pb-10 px-6"
-      style={{ backgroundColor: '#0c0c0c', color: 'white' }}
+      className="pt-16 pb-10 px-6 bg-[#111] text-white"
     >
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">

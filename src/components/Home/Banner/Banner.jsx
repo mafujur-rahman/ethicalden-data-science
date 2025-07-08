@@ -176,7 +176,7 @@ export default function Banner() {
       <div className="relative z-10 text-center max-w-5xl mx-auto">
         <h1
           ref={titleRef}
-          className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight drop-shadow-[0_0_20px_#a8ff57aa]"
+          className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight "
         >
           <span className="text-[#a8ff57]">Empowering</span> Intelligence <br />
           with <span className="text-[#09e5e5]">Data-Driven Decisions</span>
@@ -193,10 +193,10 @@ export default function Banner() {
           ref={ctaRef}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <button className="relative px-8 py-3 bg-[#a8ff57] text-[#111] font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-[0_0_15px_#a8ff57aa]">
+          <button className="relative px-8 py-3 bg-[#a8ff57] text-[#111] font-bold rounded-full hover:scale-105 transition-all duration-300 ">
             Get Started
           </button>
-          <button className="relative px-8 py-3 border-2 border-[#09e5e5] text-[#09e5e5] rounded-full hover:bg-[#09e5e5]/10 transition-all duration-300 shadow-[0_0_10px_#09e5e5aa]">
+          <button className="relative px-8 py-3 border-2 border-[#09e5e5] text-[#09e5e5] rounded-full hover:bg-[#09e5e5]/10 transition-all duration-300 ">
             Learn More
           </button>
         </div>
