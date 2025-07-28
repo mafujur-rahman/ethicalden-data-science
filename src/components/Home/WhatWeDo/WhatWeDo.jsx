@@ -1,121 +1,145 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const services = [
   {
-    title: "Data Analytics",
-    description: "Uncover hidden patterns and insights from your business data",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 text-[#09e5e5]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    )
+    title: 'Machine Learning Solutions',
+    image: '/ml-solutions.jpg',
   },
   {
-    title: "Predictive Modeling",
-    description: "Forecast future trends and behaviors with machine learning",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 text-[#a8ff57]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    )
+    title: 'Data Analytics & Visualization',
+    image: '/ml-solutions.jpg',
   },
   {
-    title: "AI & ML Solutions",
-    description: "Build intelligent systems that learn and adapt to your needs",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 text-[#09e5e5]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    )
+    title: 'Natural Language Processing',
+    image: '/ml-solutions.jpg',
   },
   {
-    title: "Data Visualization",
-    description: "Transform complex data into intuitive, actionable dashboards",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 text-[#a8ff57]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-      </svg>
-    )
-  }
+    title: 'Predictive Modeling',
+    image: '/ml-solutions.jpg',
+  },
 ];
 
-export default function WhatWeDo() {
+export default function Services() {
   const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const cardsRef = useRef([]);
+  const headingRef = useRef(null);
+  const underlineRef = useRef(null);
+  const textRef = useRef(null);
+  const imageRefs = useRef([]);
+  const splitInstance = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse',
-      },
-    });
-
-    tl.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
-    );
-
-    cardsRef.current.forEach((card, i) => {
-      tl.fromTo(
-        card,
-        { opacity: 0, y: 40, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power2.out' },
-        i * 0.12
+    const ctx = gsap.context(() => {
+      // Underline animation
+      gsap.fromTo(underlineRef.current,
+        { scaleX: 0, transformOrigin: "left center" },
+        {
+          scaleX: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          }
+        }
       );
-    });
+
+      // Text animation
+      splitInstance.current = new SplitText(textRef.current, {
+        type: "lines,words",
+        linesClass: "split-line"
+      });
+
+      gsap.from(splitInstance.current.words, {
+        opacity: 0,
+        y: "0.5em",
+        duration: 0.8,
+        stagger: 0.02,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: textRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        }
+      });
+
+      // Image animation - reveal hidden 20% at bottom while hiding 20% at top
+      imageRefs.current.forEach((imgContainer) => {
+        const img = imgContainer.querySelector('img');
+        
+        // Initial state - show only 80% (hide bottom 20%)
+        gsap.set(img, {
+          y: '20%', // Push image up to hide bottom 20%
+          clipPath: 'inset(0% 0% 20% 0%)' // Clip bottom 20%
+        });
+
+        // Scroll animation
+        gsap.to(img, {
+          y: '0%', // Move to original position
+          clipPath: 'inset(20% 0% 0% 0%)', // Now hide top 20% instead
+          ease: "none",
+          scrollTrigger: {
+            trigger: imgContainer,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          }
+        });
+      });
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      if (splitInstance.current) {
+        splitInstance.current.revert();
+      }
+    };
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="services"
-      className="py-24 px-6 bg-[#111] text-white relative overflow-hidden"
-    >
-      <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <div className="text-center mb-14 px-4">
-          <h2
-            ref={titleRef}
-            className="text-4xl md:text-5xl font-semibold tracking-tight"
-          >
-            Our{' '}
-            <span className="text-[#09e5e5]">
-              Data Science
-            </span>{' '}
-            Services
-          </h2>
-          <p className="mt-3 max-w-xl mx-auto text-gray-400 text-lg leading-relaxed">
-            We transform your data into actionable insights that drive business growth and innovation.
-          </p>
+    <section ref={sectionRef} className="bg-[#0c0c0c] text-[#e8dcd7] py-20 px-6 md:px-20 overflow-hidden">
+      <div className="max-w-screen-xl mx-auto">
+        {/* Heading */}
+        <div className="flex flex-col md:flex-row justify-between items-start mb-16">
+          <div ref={headingRef} className="mb-8 md:mb-0 relative">
+            <h3 className="text-3xl md:text-4xl text-[#a8ff57] font-medium mb-2">Our Services</h3>
+            <div 
+              ref={underlineRef}
+              className="h-[2px] bg-[#09e5e5] mt-4 absolute left-0 bottom-0 origin-left scale-x-0 w-full"
+            />
+          </div>
+          <div className="max-w-xl text-[#ccc] text-lg md:text-xl leading-relaxed">
+            <p ref={textRef} className="opacity-100">
+              We specialize in cutting-edge data science solutions tailored to your business needs. Our team combines technical expertise with domain knowledge to deliver actionable insights and intelligent systems that drive decision-making and innovation.
+            </p>
+          </div>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
-          {services.map((service, i) => (
-            <div
-              key={i}
-              ref={(el) => (cardsRef.current[i] = el)}
-              className="relative bg-[#222] rounded-xl p-8 border border-[#333] transition
-                hover:border-[#09e5e5] hover:bg-[#111] hover:shadow-lg hover:shadow-[#09e5e5]/40
-                transform hover:-translate-y-1 hover:scale-[1.02] cursor-default"
-            >
-              <div className="mb-5 inline-flex items-center justify-center rounded-full p-3 bg-[#111]">
-                {service.icon}
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-16">
+          {services.map((service, index) => (
+            <div key={index} className="space-y-3 overflow-hidden">
+              <div 
+                ref={el => imageRefs.current[index] = el}
+                className="h-64 overflow-hidden relative"
+              >
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-cover grayscale absolute top-0 left-0"
+                  style={{ willChange: 'transform, clip-path' }}
+                />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-[#a8ff57]">
-                {service.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">{service.description}</p>
+              <h4 className="text-lg md:text-xl text-[#09e5e5] leading-relaxed">{service.title}</h4>
             </div>
           ))}
         </div>

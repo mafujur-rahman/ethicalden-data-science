@@ -82,16 +82,12 @@ export default function KeyFeatures() {
       id="features"
       className="py-20 px-6 bg-[#111] text-white relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto text-center mb-16">
-        <h2
-          ref={titleRef}
-          className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight"
-          style={{ color: 'white' }}
-        >
-          Why Choose Our{' '}
-          <span style={{ color: '#a8ff57' }}>Solutions</span>
-        </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+      <div className="max-w-7xl mx-auto  mb-16">
+        <div className="flex items-center mb-4">
+          <div className="w-2 h-10 bg-[#07c4c4] mr-4"></div>
+          <h2 className="text-4xl font-bold leading-snug text-[#a8ff57]">Why Choose Our Solutions</h2>
+        </div>
+        <p className="text-gray-400 max-w-2xl  text-lg">
           Cutting-edge features designed to maximize your data&apos;s potential
         </p>
       </div>
