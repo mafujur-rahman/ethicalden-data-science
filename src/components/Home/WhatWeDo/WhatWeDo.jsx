@@ -104,7 +104,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#0c0c0c] text-[#e8dcd7] py-20 px-6 md:px-20 overflow-hidden">
+    <section id='services' ref={sectionRef} className="bg-[#0c0c0c] text-[#e8dcd7] py-20 px-6 md:px-20 overflow-hidden">
       <div className="max-w-screen-xl mx-auto">
         {/* Heading */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-16">

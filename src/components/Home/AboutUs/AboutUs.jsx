@@ -5,7 +5,7 @@ import { MdAnalytics } from 'react-icons/md';
 
 const AboutUs = () => {
   return (
-    <section className="relative py-20 px-6 md:px-20 text-white">
+    <section id='about' className="relative py-20 px-6 md:px-20 text-white">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <div 

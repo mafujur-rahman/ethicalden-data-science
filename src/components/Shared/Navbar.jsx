@@ -56,7 +56,7 @@ useEffect(() => {
 
         {/* Desktop Links */}
         <div className="hidden lg:flex space-x-8">
-          {['Services', 'Features', 'About', 'Use Cases', 'Contact'].map((item, idx) => (
+          {['About', 'Services', 'Features',  'Use Cases', 'Contact'].map((item, idx) => (
             <a
               key={idx}
               href={`#${item.toLowerCase().replace(' ', '')}`}
